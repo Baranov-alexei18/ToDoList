@@ -26,7 +26,7 @@
           <input
             class="form-check-input mt-0"
             type="checkbox"
-            value=""
+            value="what"
             aria-label="Checkbox for following text input"
           />
         </div>
