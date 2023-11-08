@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>ToDoList</h1>
     <div class="input-text input-group mb-3">
       <input
         type="text"
@@ -36,7 +35,7 @@
           aria-label="Text input with checkbox"
           v-model="inputMassiv[idx]"
         />
-        <button class="btn btn-danger" type="button">Delete</button>
+        <button class="btn btn-danger" type="button" @click="deleteItems(idx)">Delete</button>
       </div>
     </div>
   </div>
@@ -49,13 +48,16 @@ export default {
   data() {
     return {
       inputDate: "",
-      inputMassiv: ["homeTask"],
+      inputMassiv: [],
     };
   },
   methods: {
     pushToList() {
       if (this.inputDate) this.inputMassiv.push(this.inputDate);
       this.inputDate = "";
+    },
+    deleteItems(idx) {
+      this.inputMassiv.splice(idx,1);
     },
   },
 };

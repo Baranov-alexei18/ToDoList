@@ -1,10 +1,14 @@
 <template>
-  <ListOrder />
+  <div class="bar">ToDoList</div>
+  <div class="grid">
+    <div class="g-col-3" style="min-height: 85.4vh">1</div>
+    <ListOrder class="g-col-5" />
+    <div class="g-col-4" style="background: blue">2</div>
+
+  </div>
 </template>
 
 <script>
-
-
 import ListOrder from "./components/ListOrder.vue";
 
 export default {
@@ -14,7 +18,7 @@ export default {
   data() {
     return {
       inputDate: "",
-      inputMassiv: ["Home work", "homeTask"],
+      inputMassiv: [],
     };
   },
   methods: {
@@ -27,13 +31,18 @@ export default {
 </script>
 
 <style>
-@import '~bootstrap/dist/css/bootstrap.css';
-
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  background: #2c3e50;
+}
+.bar {
+  font-size: 72px;
+  background: -webkit-linear-gradient(#eee, #717bc8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-align: center;
 }
 </style>
