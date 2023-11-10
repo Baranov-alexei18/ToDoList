@@ -19,6 +19,7 @@
         +
       </button>
     </div>
+    <hr>
     <div v-for="(work, idx) in inputMassiv" :key="idx">
       <div class="input-group mb-3">
         <div class="input-group-text">
