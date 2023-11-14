@@ -64,11 +64,11 @@ export default {
   },
   methods: {
     pushToList() {
-      if (this.inputDate) this.inputMassiv.push(this.inputDate);
+      if (this.inputDate) this.$emit("pushToList",this.inputDate);
       this.inputDate = "";
     },
     deleteItems(idx) {
-      this.inputMassiv.splice(idx, 1);
+      this.$emit("deleteItems",idx);
     },
   },
 };

@@ -8,7 +8,12 @@
         @changeNameList="changeNameList"
       />
     </div>
-    <ListOrder class="g-col-5" :listItemOrder="listOrderToWatch" />
+    <ListOrder
+      class="g-col-5"
+      :listItemOrder="listOrderToWatch"
+      @pushToList="pushToList"
+      @deleteItems="deleteItems"
+    />
     <div class="g-col-4 checkList"></div>
   </div>
 </template>
@@ -27,7 +32,7 @@ export default {
       listOrderToWatch: [],
       inputMassiv: [],
       listRoster: [
-        { id: 0, nameList: "1", listItems: ["adsf", "adf"]},
+        { id: 0, nameList: "1", listItems: ["adsf", "adf"] },
         {
           id: 1,
           nameList: "2",
@@ -37,7 +42,7 @@ export default {
           id: 2,
           nameList: "3",
           listItems: ["adsf2", "adf2", "dasf3", "dsfasdf"],
-          },
+        },
         {
           id: 3,
           nameList: "4",
@@ -47,9 +52,11 @@ export default {
     };
   },
   methods: {
-    pushToList() {
-      if (this.inputDate) this.inputMassiv.push(this.inputDate);
-      this.inputDate = "";
+    pushToList(inputDate) {
+      this.listOrderToWatch.listItems.push(inputDate);
+    },
+    deleteItems(id){
+      this.listOrderToWatch.listItems.splice(id, 1);
     },
     addNewItemRoster(obj) {
       this.listRoster.push({
@@ -60,12 +67,12 @@ export default {
     },
     changeNameList(id) {
       this.listOrderToWatch = this.listRoster.find((el) => el.id === id);
-      },
+    },
   },
-  created (){
-    if(this.listOrderToWatch)
-    this.listOrderToWatch = this.listRoster.find((el) => el.id === 0);
-  }
+  created() {
+    if (this.listOrderToWatch)
+      this.listOrderToWatch = this.listRoster.find((el) => el.id === 0);
+  },
 };
 </script>
 
