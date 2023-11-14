@@ -14,11 +14,11 @@
         type="button"
         id="button-addon2"
       >
-        Поиск
+        Search
       </button>
     </div>
     <hr />
-    <div v-for="(order, id) in listRoster" :key="id">
+    <div class="listItem" v-for="(order, id) in listRoster" :key="id">
       <div
         :class="{ active: order.id === activeItem }"
         class="rosterOrder"
@@ -83,6 +83,10 @@ export default {
 </script>
   
   <style>
+.listItem {
+  margin-left: 10px;
+  margin-right: 10px;
+}
 .input-search {
   margin-top: 10px;
   padding-left: 10px;
