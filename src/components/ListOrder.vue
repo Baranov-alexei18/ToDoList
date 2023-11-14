@@ -21,20 +21,24 @@
     </div>
     <hr />
     <div v-for="(item, idx) in listItemOrder.listItems" :key="idx">
-      <div class="input-group mb-3">
+      <div
+        class="input-group mb-3"
+        v-if="item.nameItem "
+        :style="item.complitied ? 'opacity: 50%' : 'opacity: 100%'">
         <div class="input-group-text">
           <input
             class="form-check-input mt-0"
             type="checkbox"
-            value="what"
+            v-model="item.complitied"
             aria-label="Checkbox for following text input"
           />
         </div>
         <input
           type="text"
           class="form-control"
+          :class="item.complitied ? 'form-compile' : 'form-control'"
           aria-label="Text input with checkbox"
-          :value = "item"
+          v-model="item.nameItem"
         />
         <button class="btn btn-danger" type="button" @click="deleteItems(idx)">
           Delete
@@ -45,7 +49,6 @@
 </template>
 
 <script>
-
 export default {
   components: {},
 
@@ -58,17 +61,15 @@ export default {
   data() {
     return {
       inputDate: "",
-      inputMassiv: [],
-      itemOrders1: {},
     };
   },
   methods: {
     pushToList() {
-      if (this.inputDate) this.$emit("pushToList",this.inputDate);
+      if (this.inputDate) this.$emit("pushToList", this.inputDate);
       this.inputDate = "";
     },
     deleteItems(idx) {
-      this.$emit("deleteItems",idx);
+      this.$emit("deleteItems", idx);
     },
   },
 };
@@ -76,7 +77,12 @@ export default {
 
 <style>
 .input-text {
-  padding-left: 20%;
-  padding-right: 20%;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+.form-compile {
+  opacity: 80%;
+  text-decoration: line-through;
+  width: auto;
 }
 </style>

@@ -28,41 +28,48 @@ export default {
 
   data() {
     return {
-      inputDate: "",
       listOrderToWatch: [],
-      inputMassiv: [],
       listRoster: [
-        { id: 0, nameList: "1", listItems: ["adsf", "adf"] },
+        {
+          id: 0,
+          nameList: "Заметки",
+          listItems: [
+            { nameItem: "Удобное приложение", complitied: false },
+            { nameItem: "Красивый интерфейс", complitied: false },
+            { nameItem: "Красивые кнопочки Bootstrap", complitied: false },
+          ],
+        },
         {
           id: 1,
-          nameList: "2",
-          listItems: ["adsf1", "adf2", "dasf3"],
-        },
-        {
-          id: 2,
-          nameList: "3",
-          listItems: ["adsf2", "adf2", "dasf3", "dsfasdf"],
-        },
-        {
-          id: 3,
-          nameList: "4",
-          listItems: ["adsf2", "adf2", "dasf3", "dsfasdf"],
+          nameList: "Домашние дела",
+          listItems: [
+          { nameItem: "Убрать на стол", complitied: false },
+          { nameItem: "Помыть посуду", complitied: false },
+          { nameItem: "Пропылесосить", complitied: false },
+          { nameItem: "Протереть пыль", complitied: false },
+          ],
         },
       ],
     };
   },
   methods: {
     pushToList(inputDate) {
-      this.listOrderToWatch.listItems.push(inputDate);
+      this.listOrderToWatch.listItems.push({
+        nameItem: inputDate,
+        complitied: false,
+      });
     },
-    deleteItems(id){
+    deleteItems(id) {
       this.listOrderToWatch.listItems.splice(id, 1);
     },
     addNewItemRoster(obj) {
       this.listRoster.push({
         id: obj.id,
         nameList: obj.newNameItem,
-        listItems: [],
+        listItems: [{
+          nameItem: "",
+          complitied: false,
+        }],
       });
     },
     changeNameList(id) {

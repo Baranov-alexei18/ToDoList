@@ -20,7 +20,7 @@
     <hr />
     <div v-for="(order, id) in listRoster" :key="id">
       <div
-        :class="{active: order.id === activeItem}"
+        :class="{ active: order.id === activeItem }"
         class="rosterOrder"
         @click="changeNameList(id)"
       >
@@ -58,14 +58,12 @@ export default {
   data() {
     return {
       activeItem: 0,
-      addIdtoDB: {},
       inputSearch: "",
       newRosterItem: "",
     };
   },
   methods: {
     addNewItemRoster() {
-      
       if (this.newRosterItem) {
         this.$emit("addNewItemRoster", {
           id: this.listRoster.length,
@@ -75,15 +73,12 @@ export default {
       this.newRosterItem = "";
     },
     changeNameList(id) {
-      this.activeItem = id
+      this.activeItem = id;
       this.$emit("changeNameList", id);
-
     },
   },
 
-  computed: {
-    
-  },
+  computed: {},
 };
 </script>
   
