@@ -19,8 +19,8 @@
         +
       </button>
     </div>
-    <hr>
-    <div v-for="(work, idx) in inputMassiv" :key="idx">
+    <hr />
+    <div v-for="(item, idx) in listItemOrder.listItems" :key="idx">
       <div class="input-group mb-3">
         <div class="input-group-text">
           <input
@@ -34,22 +34,32 @@
           type="text"
           class="form-control"
           aria-label="Text input with checkbox"
-          v-model="inputMassiv[idx]"
+          :value = "item"
         />
-        <button class="btn btn-danger" type="button" @click="deleteItems(idx)">Delete</button>
+        <button class="btn btn-danger" type="button" @click="deleteItems(idx)">
+          Delete
+        </button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+
 export default {
   components: {},
+
+  props: {
+    listItemOrder: {
+      type: Object,
+    },
+  },
 
   data() {
     return {
       inputDate: "",
       inputMassiv: [],
+      itemOrders1: {},
     };
   },
   methods: {
@@ -58,7 +68,7 @@ export default {
       this.inputDate = "";
     },
     deleteItems(idx) {
-      this.inputMassiv.splice(idx,1);
+      this.inputMassiv.splice(idx, 1);
     },
   },
 };

@@ -19,7 +19,11 @@
     </div>
     <hr />
     <div v-for="(order, id) in listRoster" :key="id">
-      <div class="rosterOrder">
+      <div
+        :class="{active: order.id === activeItem}"
+        class="rosterOrder"
+        @click="changeNameList(id)"
+      >
         {{ order.nameList }}
       </div>
     </div>
@@ -53,23 +57,33 @@ export default {
   props: ["listRoster"],
   data() {
     return {
+      activeItem: 0,
+      addIdtoDB: {},
       inputSearch: "",
       newRosterItem: "",
-      //listRoster: [[name: "Homework",listItem:["sdf","1"]],[name: "Sale",listItem:["fdsg","2"]]],
     };
   },
   methods: {
     addNewItemRoster() {
+      
       if (this.newRosterItem) {
-        console.log(this.listRoster);
-        console.log(this.listRoster[2].nameList);
-        //this.listRoster.push(this.newRosterItem)
-        this.$emit("addNewItemRoster", this.newRosterItem)
-    }
+        this.$emit("addNewItemRoster", {
+          id: this.listRoster.length,
+          newNameItem: this.newRosterItem,
+        });
+      }
       this.newRosterItem = "";
     },
+    changeNameList(id) {
+      this.activeItem = id
+      this.$emit("changeNameList", id);
+
+    },
   },
-  computed: {},
+
+  computed: {
+    
+  },
 };
 </script>
   
@@ -86,5 +100,8 @@ export default {
   border-radius: 8px;
   background-color: black;
   color: white;
+}
+.active {
+  background-color: blue;
 }
 </style>

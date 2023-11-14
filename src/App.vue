@@ -5,10 +5,11 @@
       <ListRoster
         :listRoster="listRoster"
         @addNewItemRoster="addNewItemRoster"
+        @changeNameList="changeNameList"
       />
     </div>
-    <ListOrder class="g-col-5" />
-    <div class="g-col-4" style="background: blue">2</div>
+    <ListOrder class="g-col-5" :listItemOrder="listOrderToWatch" />
+    <div class="g-col-4 checkList"></div>
   </div>
 </template>
 
@@ -22,13 +23,26 @@ export default {
 
   data() {
     return {
-      IDBIndex: 1,
       inputDate: "",
+      listOrderToWatch: [],
       inputMassiv: [],
       listRoster: [
-        { nameList: "1", listItems: ["adsf", "adf", "dasf"] },
-        { nameList: "2", listItems: ["adsf1", "adf2", "dasf3"] },
-        { nameList: "3", listItems: ["adsf2", "adf2", "dasf3"] },
+        { id: 0, nameList: "1", listItems: ["adsf", "adf"]},
+        {
+          id: 1,
+          nameList: "2",
+          listItems: ["adsf1", "adf2", "dasf3"],
+        },
+        {
+          id: 2,
+          nameList: "3",
+          listItems: ["adsf2", "adf2", "dasf3", "dsfasdf"],
+          },
+        {
+          id: 3,
+          nameList: "4",
+          listItems: ["adsf2", "adf2", "dasf3", "dsfasdf"],
+        },
       ],
     };
   },
@@ -37,13 +51,21 @@ export default {
       if (this.inputDate) this.inputMassiv.push(this.inputDate);
       this.inputDate = "";
     },
-    addNewItemRoster(nameList) {
+    addNewItemRoster(obj) {
       this.listRoster.push({
-        nameList: nameList,
+        id: obj.id,
+        nameList: obj.newNameItem,
         listItems: [],
       });
     },
+    changeNameList(id) {
+      this.listOrderToWatch = this.listRoster.find((el) => el.id === id);
+      },
   },
+  created (){
+    if(this.listOrderToWatch)
+    this.listOrderToWatch = this.listRoster.find((el) => el.id === 0);
+  }
 };
 </script>
 
