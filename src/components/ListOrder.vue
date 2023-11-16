@@ -4,7 +4,6 @@
       <input
         type="text"
         class="form-control"
-        placeholder="any"
         aria-label="Recipient's username"
         aria-describedby="button-addon2"
         v-model="inputDate"
@@ -23,8 +22,17 @@
     <div v-for="(item, idx) in listItemOrder.listItems" :key="idx">
       <div
         class="input-group mb-3"
-        v-if="item.nameItem "
-        :style="item.complitied ? 'opacity: 50%' : 'opacity: 100%'">
+        v-if="item.nameItem"
+        :style="item.complitied ? 'opacity: 50%' : 'opacity: 100%'"
+        @dragstart="startDrag($event, idx)"
+        @drop="onDrop($event, listItemOrder.listItems, idx)"
+        :draggable="true"
+        @dragover.prevent
+        @dragenter.prevent
+      >
+        <div style="width: 30px; margin-top: 6px">
+          <img src="../assets/list.png" alt="adsf" />
+        </div>
         <div class="input-group-text">
           <input
             class="form-check-input mt-0"
@@ -60,6 +68,7 @@ export default {
 
   data() {
     return {
+      dragOnDrop: null,
       inputDate: "",
     };
   },
@@ -71,15 +80,23 @@ export default {
     deleteItems(idx) {
       this.$emit("deleteItems", idx);
     },
+    startDrag(evt, id) {
+      evt.dataTransfer.dropEffect = "move";
+      evt.dataTransfer.effectAllowed = "move";
+      this.dragOnDrop = id;
+    },
+    onDrop(evt, list, id) {
+      const container = list.splice(this.dragOnDrop, 1)[0];
+      list.splice(id, 0, container);
+      this.dragOnDrop = null;
+    },
   },
+  computed: {},
+  watch: {},
 };
 </script>
 
 <style>
-.input-text {
-  padding-left: 10%;
-  padding-right: 10%;
-}
 .form-compile {
   opacity: 80%;
   text-decoration: line-through;

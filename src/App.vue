@@ -1,7 +1,8 @@
 <template>
   <div class="bar">ToDoList</div>
-  <div class="grid">
-    <div class="g-col-3 checkList">
+  <div class="container">
+    <div class="row">
+      <div class="col-3 mx-2 checkList">
       <ListRoster
         :listRoster="listRoster"
         @addNewItemRoster="addNewItemRoster"
@@ -9,12 +10,12 @@
       />
     </div>
     <ListOrder
-      class="g-col-5"
+      class="col-8 checkList"
       :listItemOrder="listOrderToWatch"
       @pushToList="pushToList"
       @deleteItems="deleteItems"
     />
-    <div class="g-col-4 checkList"></div>
+    </div>
   </div>
 </template>
 
