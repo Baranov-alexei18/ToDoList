@@ -14,6 +14,9 @@
       :listItemOrder="listOrderToWatch"
       @pushToList="pushToList"
       @deleteItems="deleteItems"
+      @deleteItemsComplitied="deleteItemsComplitied"
+      @taskComplitied="taskComplitied"
+      @returnTask="returnTask"
     />
     </div>
   </div>
@@ -39,6 +42,7 @@ export default {
             { nameItem: "Красивый интерфейс", complitied: false },
             { nameItem: "Красивые кнопочки Bootstrap", complitied: false },
           ],
+          arrayComplitied:[],
         },
         {
           id: 1,
@@ -49,6 +53,7 @@ export default {
           { nameItem: "Пропылесосить", complitied: false },
           { nameItem: "Протереть пыль", complitied: false },
           ],
+          arrayComplitied:[],
         },
       ],
     };
@@ -63,6 +68,9 @@ export default {
     deleteItems(id) {
       this.listOrderToWatch.listItems.splice(id, 1);
     },
+    deleteItemsComplitied(id){
+      this.listOrderToWatch.arrayComplitied.splice(id, 1);
+    },
     addNewItemRoster(obj) {
       this.listRoster.push({
         id: obj.id,
@@ -71,10 +79,17 @@ export default {
           nameItem: "",
           complitied: false,
         }],
+        arrayComplitied:[],
       });
     },
     changeNameList(id) {
       this.listOrderToWatch = this.listRoster.find((el) => el.id === id);
+    },
+    taskComplitied(itemComplitied){
+      this.listOrderToWatch.arrayComplitied.push(itemComplitied);
+    },
+    returnTask(itemTask){
+      this.listOrderToWatch.listItems.push(itemTask);
     },
   },
   created() {
