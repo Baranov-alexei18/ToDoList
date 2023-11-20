@@ -65,11 +65,6 @@
           class="input-group mb-3"
           v-if="item.nameItem"
           :style="item.complitied ? 'opacity: 50%' : 'opacity: 100%'"
-          @dragstart="startDrag($event, idx)"
-          @drop="onDrop($event, listItemOrder.arrayComplitied, idx)"
-          :draggable="true"
-          @dragover.prevent
-          @dragenter.prevent
         >
           <div style="width: 30px; margin-top: 6px">
             <img src="../assets/list.png" alt="adsf" />
@@ -104,6 +99,9 @@
 </template>
 
 <script>
+import { useToast } from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-sugar.css";
+
 export default {
   components: {},
 
@@ -117,13 +115,27 @@ export default {
     return {
       dragOnDrop: null,
       inputDate: "",
+      oldInputDate: false,
       arrayComplitied: [],
     };
   },
+
   methods: {
     pushToList() {
-      if (this.inputDate) this.$emit("pushToList", this.inputDate);
-      this.inputDate = "";
+      const toast = useToast();
+      const oldInputDate = this.listItemOrder.listItems.some(
+        (item) => item.nameItem === this.inputDate
+      );
+
+      if (!this.inputDate.length) {
+        toast.error("This task is empty");
+      } else if (oldInputDate) {
+        toast.error("This task already created");
+      } else if (this.inputDate && !oldInputDate) {
+        this.$emit("pushToList", this.inputDate);
+        toast.success("New task added");
+        this.inputDate = "";
+      }
     },
     deleteItems(idx) {
       this.$emit("deleteItems", idx);
@@ -152,15 +164,14 @@ export default {
       }
     },
     returnTask(list, id) {
-      console.log("EHAT " + list.arrayComplitied[id].complitied);
-      // eslint-disable-next-line no-constant-condition
-        const container = list.arrayComplitied.find(
-          (item) => item.nameItem === list.arrayComplitied[id].nameItem
-        );
-        this.deleteItemsComplitied(id);
-        this.$emit("returnTask", container);
+      const container = list.arrayComplitied.find(
+        (item) => item.nameItem === list.arrayComplitied[id].nameItem
+      );
+      this.deleteItemsComplitied(id);
+      this.$emit("returnTask", container);
     },
   },
+
   computed: {},
   watch: {},
 };

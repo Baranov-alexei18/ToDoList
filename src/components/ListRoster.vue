@@ -24,7 +24,7 @@
         class="rosterOrder"
         @click="changeNameList(id)"
       >
-        {{ order.nameList }}
+        <label> {{ order.nameList }}</label>
       </div>
     </div>
 
@@ -93,6 +93,9 @@ export default {
   padding-right: 10px;
 }
 .rosterOrder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 30px;
   width: auto;
   margin-bottom: 3px;

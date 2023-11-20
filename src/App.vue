@@ -1,23 +1,23 @@
 <template>
   <div class="bar">ToDoList</div>
-  <div class="container">
-    <div class="row">
-      <div class="col-3 mx-2 checkList">
-      <ListRoster
-        :listRoster="listRoster"
-        @addNewItemRoster="addNewItemRoster"
-        @changeNameList="changeNameList"
+  <div class="container-md">
+    <div class="row" style="gap: 5px">
+      <div class="d-none d-sm-flex col-sm-3 mx-2 checkList">
+        <ListRoster
+          :listRoster="listRoster"
+          @addNewItemRoster="addNewItemRoster"
+          @changeNameList="changeNameList"
+        />
+      </div>
+      <ListOrder
+        class="col checkList"
+        :listItemOrder="listOrderToWatch"
+        @pushToList="pushToList"
+        @deleteItems="deleteItems"
+        @deleteItemsComplitied="deleteItemsComplitied"
+        @taskComplitied="taskComplitied"
+        @returnTask="returnTask"
       />
-    </div>
-    <ListOrder
-      class="col-8 checkList"
-      :listItemOrder="listOrderToWatch"
-      @pushToList="pushToList"
-      @deleteItems="deleteItems"
-      @deleteItemsComplitied="deleteItemsComplitied"
-      @taskComplitied="taskComplitied"
-      @returnTask="returnTask"
-    />
     </div>
   </div>
 </template>
@@ -42,18 +42,18 @@ export default {
             { nameItem: "Красивый интерфейс", complitied: false },
             { nameItem: "Красивые кнопочки Bootstrap", complitied: false },
           ],
-          arrayComplitied:[],
+          arrayComplitied: [],
         },
         {
           id: 1,
           nameList: "Домашние дела",
           listItems: [
-          { nameItem: "Убрать на стол", complitied: false },
-          { nameItem: "Помыть посуду", complitied: false },
-          { nameItem: "Пропылесосить", complitied: false },
-          { nameItem: "Протереть пыль", complitied: false },
+            { nameItem: "Убрать на стол", complitied: false },
+            { nameItem: "Помыть посуду", complitied: false },
+            { nameItem: "Пропылесосить", complitied: false },
+            { nameItem: "Протереть пыль", complitied: false },
           ],
-          arrayComplitied:[],
+          arrayComplitied: [],
         },
       ],
     };
@@ -68,33 +68,35 @@ export default {
     deleteItems(id) {
       this.listOrderToWatch.listItems.splice(id, 1);
     },
-    deleteItemsComplitied(id){
+    deleteItemsComplitied(id) {
       this.listOrderToWatch.arrayComplitied.splice(id, 1);
     },
     addNewItemRoster(obj) {
       this.listRoster.push({
         id: obj.id,
         nameList: obj.newNameItem,
-        listItems: [{
-          nameItem: "",
-          complitied: false,
-        }],
-        arrayComplitied:[],
+        listItems: [
+          {
+            nameItem: "",
+            complitied: false,
+          },
+        ],
+        arrayComplitied: [],
       });
     },
     changeNameList(id) {
       this.listOrderToWatch = this.listRoster.find((el) => el.id === id);
     },
-    taskComplitied(itemComplitied){
+    taskComplitied(itemComplitied) {
       this.listOrderToWatch.arrayComplitied.push(itemComplitied);
     },
-    returnTask(itemTask){
+    returnTask(itemTask) {
       this.listOrderToWatch.listItems.push(itemTask);
     },
   },
   created() {
     if (this.listOrderToWatch)
-      this.listOrderToWatch = this.listRoster.find((el) => el.id === 0);
+      this.listOrderToWatch = this.listRoster[0];
   },
 };
 </script>
@@ -113,11 +115,17 @@ export default {
   background-color: whitesmoke;
   border-radius: 20px;
 }
+
 .bar {
   font-size: 72px;
   background: -webkit-linear-gradient(#eee, #717bc8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-align: center;
+}
+@media (max-width: 576px){
+  .bar {
+    font-size: 48px;
+  }
 }
 </style>
