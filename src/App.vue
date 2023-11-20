@@ -6,9 +6,14 @@
         <ListRoster
           :listRoster="listRoster"
           @addNewItemRoster="addNewItemRoster"
-          @changeNameList="changeNameList"
+          @change-name-list="changeNameList"
         />
       </div>
+      <Vselect
+        class="d-flex d-sm-none col-sm-3"
+        :listRoster="listRoster"
+        @changeNameList="changeNameList"
+      />
       <ListOrder
         class="col checkList"
         :listItemOrder="listOrderToWatch"
@@ -25,10 +30,11 @@
 <script>
 import ListOrder from "./components/ListOrder.vue";
 import ListRoster from "./components/ListRoster.vue";
+import Vselect from "./components/ui/v-select.vue";
 
 export default {
   name: "App",
-  components: { ListOrder, ListRoster },
+  components: { ListOrder, ListRoster, Vselect },
 
   data() {
     return {
@@ -95,8 +101,7 @@ export default {
     },
   },
   created() {
-    if (this.listOrderToWatch)
-      this.listOrderToWatch = this.listRoster[0];
+    if (this.listOrderToWatch) this.listOrderToWatch = this.listRoster[0];
   },
 };
 </script>
@@ -123,7 +128,7 @@ export default {
   -webkit-text-fill-color: transparent;
   text-align: center;
 }
-@media (max-width: 576px){
+@media (max-width: 576px) {
   .bar {
     font-size: 48px;
   }
