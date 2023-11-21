@@ -29,9 +29,13 @@
 </template>
 
 <script>
+import { useToast } from "vue-toast-notification";
+import "vue-toast-notification/dist/theme-sugar.css";
+
 import ListOrder from "./components/ListOrder.vue";
 import ListRoster from "./components/ListRoster.vue";
 import BaseSelect from "./components/ui/BaseSelect.vue";
+
 
 export default {
   name: "App",
@@ -90,6 +94,7 @@ export default {
         ],
         arrayComplitied: [],
       });
+      this.toast.success("New TaskList created")
     },
     changeNameList(id) {
       this.listOrderToWatch = this.listRoster.find((el) => el.id === id);
@@ -102,6 +107,7 @@ export default {
     },
   },
   created() {
+    this.toast = useToast();
     if (this.listOrderToWatch) this.listOrderToWatch = this.listRoster[0];
   },
 };
