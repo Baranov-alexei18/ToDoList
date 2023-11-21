@@ -1,23 +1,17 @@
 <template>
-  <div>
-    <div class="input-text input-group mb-3 mt-2">
-      <input
-        type="text"
-        class="form-control"
-        aria-label="Recipient's username"
-        aria-describedby="button-addon2"
-        v-model="inputDate"
-        @keydown.enter="pushToList()"
-      />
-      <button
-        class="btn btn-outline-secondary"
-        type="button"
-        id="button-addon2"
-        @click="pushToList()"
-      >
-        +
-      </button>
-    </div>
+  <div class="checkList">
+    <BaseInput class="mt-2" v-model="inputDate" @keydown.enter="pushToList()">
+      <template v-slot:afterInput>
+        <button
+          class="btn btn-outline-secondary"
+          type="button"
+          id="button-addon2"
+          @click="pushToList()"
+        >
+          +
+        </button>
+      </template>
+    </BaseInput>
     <hr />
     <div v-for="(item, idx) in listItemOrder.listItems" :key="idx">
       <div
@@ -30,28 +24,34 @@
         @dragover.prevent
         @dragenter.prevent
       >
-        <div style="width: 30px; margin-top: 6px">
-          <img src="../assets/list.png" alt="adsf" />
-        </div>
-        <div class="input-group-text">
-          <input
-            class="form-check-input mt-0"
-            type="checkbox"
-            v-model="item.complitied"
-            aria-label="Checkbox for following text input"
-            @change="taskComplitied(listItemOrder, idx)"
-          />
-        </div>
-        <input
-          type="text"
-          class="form-control"
+        <BaseInput
           :class="item.complitied ? 'form-compile' : 'form-control'"
-          aria-label="Text input with checkbox"
           v-model="item.nameItem"
-        />
-        <button class="btn btn-danger" type="button" @click="deleteItems(idx)">
-          Delete
-        </button>
+        >
+          <template v-slot:beforeInput>
+            <div style="width: 30px; margin-top: 6px">
+              <img src="../assets/list.png" alt="adsf" />
+            </div>
+            <div class="input-group-text">
+              <input
+                class="form-check-input mt-0"
+                type="checkbox"
+                v-model="item.complitied"
+                aria-label="Checkbox for following text input"
+                @change="taskComplitied(listItemOrder, idx)"
+              />
+            </div>
+          </template>
+          <template v-slot:afterInput>
+            <button
+              class="btn btn-danger"
+              type="button"
+              @click="deleteItems(idx)"
+            >
+              Delete
+            </button>
+          </template>
+        </BaseInput>
       </div>
     </div>
     <div v-if="listItemOrder.arrayComplitied.length">
@@ -61,38 +61,37 @@
         </p>
       </div>
       <div v-for="(item, idx) in listItemOrder.arrayComplitied" :key="idx">
-        <div
+        <BaseInput 
+          :class="item.complitied ? 'form-compile' : 'form-control'"
+          v-model="item.nameItem"
           class="input-group mb-3"
           v-if="item.nameItem"
           :style="item.complitied ? 'opacity: 50%' : 'opacity: 100%'"
         >
-          <div style="width: 30px; margin-top: 6px">
-            <img src="../assets/list.png" alt="adsf" />
-          </div>
-          <div class="input-group-text">
-            <input
-              class="form-check-input mt-0"
-              type="checkbox"
-              v-model="item.complitied"
-              aria-label="Checkbox for following text input"
-              @change="returnTask(listItemOrder, idx)"
-            />
-          </div>
-          <input
-            type="text"
-            class="form-control"
-            :class="item.complitied ? 'form-compile' : 'form-control'"
-            aria-label="Text input with checkbox"
-            v-model="item.nameItem"
-          />
-          <button
-            class="btn btn-danger"
-            type="button"
-            @click="deleteItemsComplitied(idx)"
-          >
-            Delete
-          </button>
-        </div>
+          <template v-slot:beforeInput>
+            <div style="width: 30px; margin-top: 6px">
+              <img src="../assets/list.png" alt="adsf" />
+            </div>
+            <div class="input-group-text">
+              <input
+                class="form-check-input mt-0"
+                type="checkbox"
+                v-model="item.complitied"
+                aria-label="Checkbox for following text input"
+                @change="returnTask(listItemOrder, idx)"
+              />
+            </div>
+          </template>
+          <template v-slot:afterInput>
+            <button
+              class="btn btn-danger"
+              type="button"
+              @click="deleteItemsComplitied(idx)"
+            >
+              Delete
+            </button>
+          </template>
+        </BaseInput>
       </div>
     </div>
   </div>
@@ -102,8 +101,10 @@
 import { useToast } from "vue-toast-notification";
 import "vue-toast-notification/dist/theme-sugar.css";
 
+import BaseInput from "./ui/BaseInput.vue";
+
 export default {
-  components: {},
+  components: { BaseInput },
 
   props: {
     listItemOrder: {
@@ -178,20 +179,31 @@ export default {
 </script>
 
 <style>
-.form-compile {
+.checkList {
+  padding: 5px;
+  min-height: 85.4vh;
+  background-color: whitesmoke;
+  border-radius: 20px;
+}
+.form-compile input{
   opacity: 80%;
   text-decoration: line-through;
-  width: auto;
 }
 .chip {
   margin-bottom: 3px;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 17%;
+  width: 110px;
   height: 30px;
   font-size: 15px;
   background-color: antiquewhite;
   border-radius: 10px;
+}
+@media (max-width: 576px) {
+  .checkList {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
 }
 </style>

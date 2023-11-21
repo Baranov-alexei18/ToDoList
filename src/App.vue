@@ -5,17 +5,18 @@
       <div class="d-none d-sm-flex col-sm-3 mx-2 checkList">
         <ListRoster
           :listRoster="listRoster"
-          @addNewItemRoster="addNewItemRoster"
+          @add-new-item-roster="addNewItemRoster"
           @change-name-list="changeNameList"
         />
       </div>
-      <Vselect
-        class="d-flex d-sm-none col-sm-3"
+      <BaseSelect
+        class="d-block d-sm-none"
         :listRoster="listRoster"
-        @changeNameList="changeNameList"
+        @add-new-item-roster="addNewItemRoster"
+        @change-name-list="changeNameList"
       />
       <ListOrder
-        class="col checkList"
+        class="col"
         :listItemOrder="listOrderToWatch"
         @pushToList="pushToList"
         @deleteItems="deleteItems"
@@ -30,11 +31,11 @@
 <script>
 import ListOrder from "./components/ListOrder.vue";
 import ListRoster from "./components/ListRoster.vue";
-import Vselect from "./components/ui/v-select.vue";
+import BaseSelect from "./components/ui/BaseSelect.vue";
 
 export default {
   name: "App",
-  components: { ListOrder, ListRoster, Vselect },
+  components: { ListOrder, ListRoster, BaseSelect },
 
   data() {
     return {

@@ -1,24 +1,20 @@
 <template>
   <div>
     <div class="input-search input-group">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Поиск"
-        aria-label="Recipient's username"
-        aria-describedby="button-addon2"
-        v-model="inputSearch"
-      />
-      <button
-        class="btn btn-outline-secondary"
-        type="button"
-        id="button-addon2"
-      >
-        Search
-      </button>
+      <BaseInput v-model="inputSearch">
+        <template v-slot:afterInput>
+          <button
+            class="btn btn-outline-secondary"
+            type="button"
+            id="button-addon2"
+          >
+            Search
+          </button>
+        </template>
+      </BaseInput>
     </div>
     <hr />
-    <div class="listItem" v-for="(order, id) in listRoster" :key="id">
+    <div class="mx-2" v-for="(order, id) in listRoster" :key="id">
       <div
         :class="{ active: order.id === activeItem }"
         class="rosterOrder"
@@ -27,32 +23,28 @@
         <label> {{ order.nameList }}</label>
       </div>
     </div>
-
-    <div class="input-search input-group">
-      <input
-        type="text"
-        class="form-control"
-        placeholder=""
-        aria-label="Recipient's username"
-        aria-describedby="button-addon2"
-        v-model="newRosterItem"
-        @keydown.enter="addNewItemRoster"
-      />
-      <button
-        class="btn btn btn-primary"
-        type="button"
-        id="button-addon2"
-        @click="addNewItemRoster"
-      >
-        Create
-      </button>
+    <div class="input-search">
+      <BaseInput v-model="newRosterItem" @keydown.enter="addNewItemRoster">
+        <template v-slot:afterInput>
+          <button
+            class="btn btn btn-primary"
+            type="button"
+            id="button-addon2"
+            @click="addNewItemRoster"
+          >
+            Create
+          </button>
+        </template>
+      </BaseInput>
     </div>
   </div>
 </template>
   
   <script>
+import BaseInput from "./ui/BaseInput.vue";
+
 export default {
-  components: {},
+  components: { BaseInput },
 
   props: ["listRoster"],
   data() {
@@ -83,10 +75,6 @@ export default {
 </script>
   
   <style>
-.listItem {
-  margin-left: 10px;
-  margin-right: 10px;
-}
 .input-search {
   margin-top: 10px;
   padding-left: 10px;
