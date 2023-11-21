@@ -1,12 +1,16 @@
 <template>
   <div>
     <div class="input-search input-group">
-      <BaseInput v-model="inputSearch">
+      <BaseInput
+        v-model="inputSearch"
+        @keydown.enter="filterQueryToTasklist(inputSearch)"
+      >
         <template v-slot:afterInput>
           <button
             class="btn btn-outline-secondary"
             type="button"
             id="button-addon2"
+            @click="filterQueryToTasklist(inputSearch)"
           >
             Search
           </button>
@@ -14,11 +18,11 @@
       </BaseInput>
     </div>
     <hr />
-    <div class="mx-2" v-for="(order, id) in listRoster" :key="id">
+    <div class="mx-2" v-for="(order, id) in filterTaskListArr" :key="id">
       <div
         :class="{ active: order.id === activeItem }"
         class="rosterOrder"
-        @click="changeNameList(id)"
+        @click="changeNameList(order.id)"
       >
         <label> {{ order.nameList }}</label>
       </div>
@@ -52,6 +56,7 @@ export default {
       activeItem: 0,
       inputSearch: "",
       newRosterItem: "",
+      filterTaskListArr: [],
     };
   },
   methods: {
@@ -62,15 +67,24 @@ export default {
           newNameItem: this.newRosterItem,
         });
       }
+      this.inputSearch = "";
       this.newRosterItem = "";
+      this.filterQueryToTasklist(this.inputSearch);
     },
     changeNameList(id) {
       this.activeItem = id;
       this.$emit("changeNameList", id);
     },
+    filterQueryToTasklist(params) {
+      this.filterTaskListArr = this.listRoster.filter(
+        (el) => el?.nameList.toLowerCase().indexOf(params.toLowerCase()) !== -1
+      );
+    },
   },
 
-  computed: {},
+  created() {
+    this.filterTaskListArr = this.listRoster;
+  },
 };
 </script>
   
